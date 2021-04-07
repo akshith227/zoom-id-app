@@ -48,7 +48,7 @@ console.log(numberOfPeriods)
 while(x<=numberOfRows) {
     day = days[z]
     bg_colours = ["#baffcd","#d3d3d3","#add8e6","#ffbaba","#CDCDCD","#faffba","#afeeee"]
-    row = `<tr style="background-color:${bg_colours[z]};"><td>${day}</td><td>${y}</td><td><form class="ui form"><input type="text" name="${day}-${y}-id" placeholder="Meeting ID"></form></td><td><form class="ui form"><input type="text" name="${day}-${y}-pwd" placeholder="Password"></form></td></tr>`
+    row = `<tr style="background-color:${bg_colours[z]};"><td>${day}</td><td>${y}</td><td><form class="ui form"><input type="text" name="${day}-${y}-id" required placeholder="Meeting ID"></form></td><td><form class="ui form"><input type="text" name="${day}-${y}-pwd" required placeholder="Password"></form></td></tr>`
     tableContent = tableContent + row
     x++;
     y++;
@@ -59,5 +59,21 @@ while(x<=numberOfRows) {
 }
 tbody = document.getElementById("main_content")
 tbody.innerHTML = tableContent
+ids_passwords = []
+function getIDS(){
+    period = 1
+    days.forEach(day => {
+        while (period<=numberOfPeriods){
+            id_name = `${day}-${period}-id`
+            pwd_name = `${day}-${period}-pwd`
+            ids_passwords.push([id_name, pwd_name])
+            period++
+        }
+        period = 1
+    });
+}
+ids_passwords.forEach(id_password => {
+    
+});
 //5 days 8 periods
 //day 1 = 8 rows, da
