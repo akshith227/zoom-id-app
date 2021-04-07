@@ -31,5 +31,33 @@ while (true){
         x = 0;
     }
 }
-alert('pog')
-
+alert('You can now fill in the timetable.')
+//number of rows = numberOfDays * numberOfPeriods
+//each row should have <td> <td> with filled in value of day and period number, and <td> meeting id with text input box and <td> with password text input
+//each input td can have unique id which when submit button clicked, array can collect all values using document.getElementById.value
+//data conversion to json be done later.
+numberOfRows = numberOfDays * numberOfPeriods
+x = 1
+y=1
+z=0
+//x=row
+//y=period
+//z=day
+tableContent = ""
+console.log(numberOfPeriods)
+while(x<=numberOfRows) {
+    day = days[z]
+    bg_colours = ["#baffcd","#d3d3d3","#add8e6","#ffbaba","#CDCDCD","#faffba","#afeeee"]
+    row = `<tr style="background-color:${bg_colours[z]};"><td>${day}</td><td>${y}</td><td><form class="ui form"><input type="text" name="${day}-${y}-id" placeholder="Meeting ID"></form></td><td><form class="ui form"><input type="text" name="${day}-${y}-pwd" placeholder="Password"></form></td></tr>`
+    tableContent = tableContent + row
+    x++;
+    y++;
+    if(y>numberOfPeriods) {
+        y=1;
+        z++;
+    }
+}
+tbody = document.getElementById("main_content")
+tbody.innerHTML = tableContent
+//5 days 8 periods
+//day 1 = 8 rows, da
