@@ -48,7 +48,7 @@ console.log(numberOfPeriods)
 while(x<=numberOfRows) {
     day = days[z]
     bg_colours = ["#baffcd","#d3d3d3","#add8e6","#ffbaba","#CDCDCD","#faffba","#afeeee"]
-    row = `<tr style="background-color:${bg_colours[z]};"><td>${day}</td><td>${y}</td><td><form class="ui form"><input type="text" name="${day}-${y}-id" required placeholder="Meeting ID"></form></td><td><form class="ui form"><input type="text" name="${day}-${y}-pwd" required placeholder="Password"></form></td></tr>`
+    row = `<tr style="background-color:${bg_colours[z]};"><td>${day}</td><td>${y}</td><td><form class="ui form"><input type="text" name="${day}-${y}-id" id="${day}-${y}-id" required placeholder="Meeting ID"></form></td><td><form class="ui form"><input type="text" name="${day}-${y}-pwd" id="${day}-${y}-pwd" required placeholder="Password"></form></td></tr>`
     tableContent = tableContent + row
     x++;
     y++;
@@ -59,21 +59,28 @@ while(x<=numberOfRows) {
 }
 tbody = document.getElementById("main_content")
 tbody.innerHTML = tableContent
-ids_passwords = []
+ids_passwords_input_names = []
+ids_passwords_text = `"meetingids":{"1":[],"2":[],"3":[],"4":[],"5":[],"6":[],"7":[]`
 function getIDS(){
     period = 1
     days.forEach(day => {
         while (period<=numberOfPeriods){
             id_name = `${day}-${period}-id`
             pwd_name = `${day}-${period}-pwd`
-            ids_passwords.push([id_name, pwd_name])
+            ids_passwords_input_names.push([id_name, pwd_name])
             period++
         }
         period = 1
     });
+    ids_passwords_input_names.forEach(id_password_name => {
+        day = id_password_name[0].split("-")[0]
+        meeting_id = document.getElementById(id_password_name[0]).value
+        pwd = document.getElementById(id_password_name[1]).value
+        if (day=='Monday') {day = '2'} else if (day=='Tuesday') {day='3'} else if (day=='Wednesday') {day='4'} else if (day=='Thursday') {day='5'} else if (day=='Friday') {day='6'} else if (day=='Saturday') {day='7'} else if (day=='Sunday') {day='7'} 
+        text = `["x", "${meeting_id}", "${pwd}"],`
+        var n = ids_passwords_text.indexOf(day)-3;
+        console.log(n)
+        ids_passwords_text = [ids_passwords_text.slice(0, n), text, ids_passwords_text.slice(n)].join('');
+    });
+    console.log(ids_passwords_text)
 }
-ids_passwords.forEach(id_password => {
-    
-});
-//5 days 8 periods
-//day 1 = 8 rows, da
