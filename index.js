@@ -44,6 +44,13 @@ z=0
 //y=period
 //z=day
 tableContent = ""
+timingsContent = ""
+period = 1
+while(period<=numberOfPeriods){
+    timingsContent = timingsContent +  `<tr><td>${period}</td><td><form class="ui form"><input type="time" id=${period}-start></form></td><td><form class="ui form"><input type="time" id=${period}-end></form></td></tr>`
+    period++
+}
+document.getElementById("main_content_timings").innerHTML = timingsContent
 console.log(numberOfPeriods)
 while(x<=numberOfRows) {
     day = days[z]
@@ -68,6 +75,30 @@ thursday = []
 friday = []
 saturday = []
 sunday = []
+timing_json_text = ""
+function getAll(){
+    getTimings()
+}
+function formatTime(org){
+    if (org[0] == "0") {
+        return org[1]+org[3]+org[4]
+    } else {
+        return org[0]+org[1]+org[3]+org[4]
+    }
+}
+function getTimings() {
+    var period = 1
+    while (period<=numberOfPeriods) {
+        start_time = parseInt(formatTime(document.getElementById(`${period}-start`).value))
+        end_time = parseInt(formatTime(document.getElementById(`${period}-end`).value))
+        text = `"${period}": [${start_time}, ${end_time}],`
+        timing_json_text = `${timing_json_text}${text}`
+        console.log(text)
+        period++
+    }
+    timing_json_text = timing_json_text.slice(0,-1)
+    getIDS()
+}
 function getIDS(){
     period = 1
     days.forEach(day => {
@@ -107,9 +138,6 @@ function getIDS(){
             sunday.push(text)
         } 
     });
-    convertAndSendToJSON()
-}
-function convertAndSendToJSON(){
     monday_json = JSON.stringify(monday)
     tuesday_json = JSON.stringify(tuesday)
     wednesday_json = JSON.stringify(wednesday)
@@ -117,5 +145,13 @@ function convertAndSendToJSON(){
     friday_json = JSON.stringify(friday)
     saturday_json = JSON.stringify(saturday)
     sunday_json = JSON.stringify(sunday)
-    ids_passwords_text = `"meetingids":{"1":${monday_json},"2":${tuesday_json},"3":${wednesday_json},"4":${thursday_json},"5":${friday_json},"6":${saturday_json},"7":${sunday_json}`
+    ids_passwords_text = `"meetingids":{"1":${monday_json},"2":${tuesday_json},"3":${wednesday_json},"4":${thursday_json},"5":${friday_json},"6":${saturday_json},"7":${sunday_json}}`
+    done()
+}
+
+final_json = ""
+function done(){
+    final_json = `{"timedivisions": {${timing_json_text}},${ids_passwords_text}}`
+    document.querySelector("body").innerHTML = `<h1 class="ui header" style="text-align: center; margin: 2.5rem;">Copy the following text to timetable.json</h1>
+    <div class = "container" style="font-size:1rem">${final_json}</div>`
 }
