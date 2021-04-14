@@ -61,6 +61,13 @@ tbody = document.getElementById("main_content")
 tbody.innerHTML = tableContent
 ids_passwords_input_names = []
 ids_passwords_text = `"meetingids":{"1":[],"2":[],"3":[],"4":[],"5":[],"6":[],"7":[]`
+monday = []
+tuesday = []
+wednesday = []
+thursday = []
+friday = []
+saturday = []
+sunday = []
 function getIDS(){
     period = 1
     days.forEach(day => {
@@ -76,11 +83,39 @@ function getIDS(){
         day = id_password_name[0].split("-")[0]
         meeting_id = document.getElementById(id_password_name[0]).value
         pwd = document.getElementById(id_password_name[1]).value
-        if (day=='Monday') {day = '2'} else if (day=='Tuesday') {day='3'} else if (day=='Wednesday') {day='4'} else if (day=='Thursday') {day='5'} else if (day=='Friday') {day='6'} else if (day=='Saturday') {day='7'} else if (day=='Sunday') {day='7'} 
-        text = `["x", "${meeting_id}", "${pwd}"],`
-        var n = ids_passwords_text.indexOf(day)-3;
-        console.log(n)
-        ids_passwords_text = [ids_passwords_text.slice(0, n), text, ids_passwords_text.slice(n)].join('');
+        text = ['x', meeting_id, pwd]
+        if (day=='Monday') {
+            day = '1'
+            monday.push(text)
+        } else if (day=='Tuesday') {
+            day='2'
+            tuesday.push(text)
+        } else if (day=='Wednesday') {
+            day='3'
+            wednesday.push(text)
+        } else if (day=='Thursday') {
+            day='4'
+            thursday.push(text)
+        } else if (day=='Friday') {
+            day='5'
+            friday.push(text)
+        } else if (day=='Saturday') {
+            day='6'
+            saturday.push(text)
+        } else if (day=='Sunday') {
+            day='7'
+            sunday.push(text)
+        } 
     });
-    console.log(ids_passwords_text)
+    convertAndSendToJSON()
+}
+function convertAndSendToJSON(){
+    monday_json = JSON.stringify(monday)
+    tuesday_json = JSON.stringify(tuesday)
+    wednesday_json = JSON.stringify(wednesday)
+    thursday_json = JSON.stringify(thursday)
+    friday_json = JSON.stringify(friday)
+    saturday_json = JSON.stringify(saturday)
+    sunday_json = JSON.stringify(sunday)
+    ids_passwords_text = `"meetingids":{"1":${monday_json},"2":${tuesday_json},"3":${wednesday_json},"4":${thursday_json},"5":${friday_json},"6":${saturday_json},"7":${sunday_json}`
 }
