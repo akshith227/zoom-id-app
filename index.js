@@ -152,6 +152,16 @@ function getIDS(){
 final_json = ""
 function done(){
     final_json = `{"timedivisions": {${timing_json_text}},${ids_passwords_text}}`
-    document.querySelector("body").innerHTML = `<h1 class="ui header" style="text-align: center; margin: 2.5rem;">Copy the following text to timetable.json</h1>
-    <div class = "container" style="font-size:1rem">${final_json}</div>`
+    downloadToFile(final_json, 'timetable.json', 'text/plain');
+    document.querySelector("body").innerHTML = `<div style="font-family:monospace"><h1 class="ui header huge" style="text-align: center; margin: 2.5rem;">Copy the downloaded file to the same directory as the exe file(dist).</h1></div>`
 }
+const downloadToFile = (content, filename, contentType) => {
+    const a = document.createElement('a');
+    const file = new Blob([content], {type: contentType});
+    
+    a.href= URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
+  
+      URL.revokeObjectURL(a.href);
+};
