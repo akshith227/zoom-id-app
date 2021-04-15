@@ -153,7 +153,7 @@ final_json = ""
 function done(){
     final_json = `{"timedivisions": {${timing_json_text}},${ids_passwords_text}}`
     downloadToFile(final_json, 'timetable.json', 'text/plain');
-    document.querySelector("body").innerHTML = `<div style="font-family:monospace"><h1 class="ui header huge" style="text-align: center; margin: 2.5rem;">Copy the downloaded file to the same directory as the exe file(dist).</h1></div>`
+    document.querySelector("body").innerHTML = `<div style="font-family:monospace"><h1 class="ui header huge" style="text-align: center; margin: 2.5rem;">Copy the downloaded file to the same directory as the exe file.</h1></div>`
 }
 const downloadToFile = (content, filename, contentType) => {
     const a = document.createElement('a');
