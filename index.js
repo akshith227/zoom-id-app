@@ -32,10 +32,6 @@ while (true){
     }
 }
 alert('You can now fill in the timetable.')
-//number of rows = numberOfDays * numberOfPeriods
-//each row should have <td> <td> with filled in value of day and period number, and <td> meeting id with text input box and <td> with password text input
-//each input td can have unique id which when submit button clicked, array can collect all values using document.getElementById.value
-//data conversion to json be done later.
 numberOfRows = numberOfDays * numberOfPeriods
 x = 1
 y=1
